@@ -100497,19 +100497,44 @@ function () {
   }
 
   CustomMap.prototype.addMarker = function (mappable) {
-    new google.maps.Marker({
+    var _this = this;
+
+    var marker = new google.maps.Marker({
       map: this.googleMap,
       position: {
         lat: mappable.location.lat,
         lng: mappable.location.lng
       }
     });
+    marker.addListener('click', function () {
+      var infoWindow = new google.maps.InfoWindow({
+        content: 'Hi there!'
+      });
+      infoWindow.open(_this.googleMap, marker);
+    });
   };
 
   return CustomMap;
 }();
 
-exports.CustomMap = CustomMap;
+exports.CustomMap = CustomMap; // addUserMarker(user: User): void {
+//   new google.maps.Marker({
+//     map: this.googleMap,
+//     position: {
+//       lat: user.location.lat,
+//       lng: user.location.lng
+//     }
+//   });
+// }
+// addCompanyMarker(company: Company): void {
+//   new google.maps.Marker({
+//     map: this.googleMap,
+//     position: {
+//       lat: company.location.lat,
+//       lng: company.location.lng
+//     }
+//   });
+// }
 },{}],"src/index.ts":[function(require,module,exports) {
 "use strict";
 
