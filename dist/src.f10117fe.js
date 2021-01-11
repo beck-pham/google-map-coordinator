@@ -100424,12 +100424,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.User = void 0;
 
-var faker_1 = __importDefault(require("faker"));
+var faker_1 = __importDefault(require("faker")); // to make sure User have all the property of Mappable interaface
+
 
 var User =
 /** @class */
 function () {
+  // to initalize
   function User() {
+    this.color = 'red'; // <- if we don't have this property, ts will points out the err in User.ts (by using implements)
+
     this.name = faker_1.default.name.firstName();
     this.location = {
       // lat and lng string type by default
@@ -100437,6 +100441,10 @@ function () {
       lng: parseFloat(faker_1.default.address.latitude())
     };
   }
+
+  User.prototype.markerContent = function () {
+    return "User Name: " + this.name;
+  };
 
   return User;
 }();
@@ -100457,12 +100465,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Company = void 0;
 
-var faker_1 = __importDefault(require("faker"));
+var faker_1 = __importDefault(require("faker")); // to make sure User have all the property of Mappable interaface
+
 
 var Company =
 /** @class */
 function () {
+  // to initalize
   function Company() {
+    this.color = 'red'; // <- if we don't have this property, ts will points out the err in User.ts (by using implements)
+
     this.companyName = faker_1.default.company.companyName();
     this.catchPhrase = faker_1.default.company.catchPhrase();
     this.location = {
@@ -100470,6 +100482,10 @@ function () {
       lng: parseFloat(faker_1.default.address.longitude())
     };
   }
+
+  Company.prototype.markerContent = function () {
+    return "\n      <div>\n      <h1>Company Name: " + this.companyName + "</h1>\n      <h3>Catchphrase: " + this.catchPhrase + "</h3>\n      </div>\n    ";
+  };
 
   return Company;
 }();
@@ -100508,7 +100524,7 @@ function () {
     });
     marker.addListener('click', function () {
       var infoWindow = new google.maps.InfoWindow({
-        content: 'Hi there!'
+        content: mappable.markerContent()
       });
       infoWindow.open(_this.googleMap, marker);
     });
